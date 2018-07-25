@@ -29,6 +29,15 @@ ALLOWED_HOSTS = []
 
 
 # Application definition
+THIRD_PARTY_APPS = [
+    'django_extensions',
+    'rest_framework',
+]
+
+LOCAL_APPS = [
+    'contacts',
+]
+
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -37,7 +46,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-]
+
+] + THIRD_PARTY_APPS + LOCAL_APPS
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -118,3 +128,11 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+
+try:
+    from .local_settings import *  # noqa
+    print("Imported local settings")
+except ImportError as e:
+    print("Cannot import local settings: {}".format(e))
+    pass
